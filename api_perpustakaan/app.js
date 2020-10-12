@@ -2,11 +2,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const app = express()
-const db = require('./api/routes/data_buku')
-const dm = require('./api/routes/data_mahasiswa')
-const dp = require('./api/routes/data_petugas')
-const dpinjam = require('./api/routes/data_peminjaman')
-const dk = require('./api/routes/data_pengembalian')
 const port = 4000
 
 app.use(morgan('dev'))
@@ -18,6 +13,21 @@ app.use(bodyParser.urlencoded({
 app.get('/',(req, res) =>{
     res.json({info:'test'})
 })
+
+// routes
+const db = require('./api/routes/data_buku')
+const dm = require('./api/routes/data_mahasiswa')
+const dp = require('./api/routes/data_petugas')
+const dpinjam = require('./api/routes/data_peminjaman')
+const dk = require('./api/routes/data_pengembalian')
+const du = require('./api/routes/data_universitas')
+
+//data UNIVERSITAS
+app.get('/univ', du.getUniversitas)
+app.get('/univ/:id',du.getUniversitasById)
+app.post('/univ', du.createUniversitas)
+app.put('/uiv/:id', du.updateUniversitas)
+app.delete('/univ/:id', du.deleteUniversitas)
 
 // data buku
 app.get('/book', db.getBook)
